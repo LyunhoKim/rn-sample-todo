@@ -1,10 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, createContext } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import Heading from './heading';
 import Input from './input';
 import Button from './submitButton';
 import TodoList from './todoList';
 import TabBar from './tabBar';
+import Store from './context/Store';
+
+const { Provider } = Store;
 
 let todoIndex = 0;
 class App extends Component {
@@ -21,12 +24,7 @@ class App extends Component {
     this.setType = this.setType.bind(this);
   }
 
-  componentDidUpdate() {
-    //console.log('State', this.state);
-  }
-
-  inputChange(inputValue) {
-    //console.log('Input Value: ', inputValue);
+  inputChange(inputValue) {    
     this.setState({ inputValue });
   }
 
@@ -76,11 +74,11 @@ class App extends Component {
       <View style={ styles.container }>
         <ScrollView keyboardShouldPersistTaps='always' style={ styles.content }>
           <Heading />
-          <Input
-            inputValue={ inputValue }
-            inputChange={ (text) => this.inputChange(text) } />
-            <TodoList todos={ todos } toggleComplete={ this.toggleComplete } deleteTodo={ this.deleteTodo } type={ type } />
-          <Button submitTodo={ this.submitTodo } />
+          <Provider value={{ data: this.state, inputChange: (text) => this.inputChange(text), submitTodo: this.submitTodo, toggleComplete: this.toggleComplete, deleteTodo: this.deleteTodo }}>            
+            <Input />
+            <TodoList />
+            <Button />
+          </Provider>
         </ScrollView>
         <TabBar type={ type } setType={ this.setType } />
       </View>

@@ -1,16 +1,23 @@
 import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
+import Store from './context/Store';
 
-const Input = ({ inputValue, inputChange }) => ( 
+const { Consumer } = Store;
+
+const Input = () => ( 
   <View style={ styles.inputContainer }>
-    <TextInput 
-      value={ inputValue }
-      style={ styles.input } 
-      placeholder='What needs to be done'
-      placeholderTextColor='#CACACA'
-      selectionColor='#666666'
-      onChangeText={ inputChange }
-      />
+    <Consumer>
+      {({data, inputChange}) => (
+        <TextInput 
+          value={ data.inputValue }
+          style={ styles.input } 
+          placeholder='What needs to be done'
+          placeholderTextColor='#CACACA'
+          selectionColor='#666666'
+          onChangeText={ inputChange }
+        />
+      )}
+    </Consumer>
   </View>
 
 )

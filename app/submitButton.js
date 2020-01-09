@@ -1,16 +1,22 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
+import Store from './context/Store';
+const { Consumer } = Store;
 
-const Button = ({ submitTodo }) => (
+const Button = () => (
   <View style={styles.buttonContainer}>
-    <TouchableHighlight
-      underlayColor='#efefef'
-      onPress={ submitTodo }
-      style={styles.button}>
-      <Text style={styles.submit}>
-        Submit
-      </Text>
-    </TouchableHighlight>
+    <Consumer>
+      {({ submitTodo }) => (
+        <TouchableHighlight
+          underlayColor='#efefef'
+          onPress={ submitTodo }
+          style={styles.button}>
+          <Text style={styles.submit}>
+            Submit
+          </Text>
+        </TouchableHighlight>
+      )}      
+    </Consumer>
   </View>
 )
 
