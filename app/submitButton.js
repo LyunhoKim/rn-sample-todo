@@ -1,22 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
-import Store from './context/Store';
-const { Consumer } = Store;
+import { connect, actions } from './context/Store';
 
 const Button = () => (
-  <View style={styles.buttonContainer}>
-    <Consumer>
-      {({ submitTodo }) => (
-        <TouchableHighlight
-          underlayColor='#efefef'
-          onPress={ submitTodo }
-          style={styles.button}>
-          <Text style={styles.submit}>
-            Submit
-          </Text>
-        </TouchableHighlight>
-      )}      
-    </Consumer>
+  <View style={styles.buttonContainer}>    
+    <TouchableHighlight
+      underlayColor='#efefef'
+      onPress={ actions.submitTodo }
+      style={styles.button}>
+      <Text style={styles.submit}>
+        Submit
+      </Text>
+    </TouchableHighlight>    
   </View>
 )
 
@@ -43,5 +38,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Button;
-
+export default connect(state => state) (Button);

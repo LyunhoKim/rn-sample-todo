@@ -1,15 +1,16 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import TabBarItem from './tabBarItem';
+import { connect, actions } from './context/Store';
 
-const TabBar = ({ setType, type }) => (
+const TabBar = ({ type }) => (
   <View style={ styles.container }>
     <TabBarItem type={ type } title='All'
-    setType={ () => setType('All') }/>
+    setType={ () => actions.setType('All') }/>
     <TabBarItem type={ type } border title='Active'
-    setType={ () => setType('Active') }/>
+    setType={ () => actions.setType('Active') }/>
     <TabBarItem type={ type } title='Complete'
-    setType={ () => setType('Complete') }/>
+    setType={ () => actions.setType('Complete') }/>
   </View>
 )
 
@@ -22,4 +23,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TabBar;
+export default connect(state => state) (TabBar);

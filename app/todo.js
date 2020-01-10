@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-
 import TodoButton from './todoButton';
+import { connect, actions } from './context/Store';
 
-const Todo = ({ todo, toggleComplete, deleteTodo }) => (
+const Todo = ({ todo }) => (
   <View style={ styles.todoContainer }>
     <Text style={ styles.todoText }>
       {todo.title}
     </Text>
     <View style={ styles.buttons }>
-      <TodoButton onPress={ () => toggleComplete(todo.todoIndex) } complete={ todo.complete } name={ todo.complete ? `completed` : `done` }/>
-      <TodoButton onPress={ () => deleteTodo(todo.todoIndex) } complete={false} name={`Delete`}/>
+      <TodoButton onPress={ () => actions.toggleComplete(todo.todoIndex)  } complete={ todo.complete } name={ todo.complete ? `completed` : `done` }/>
+      <TodoButton onPress={ () => actions.deleteTodo(todo.todoIndex) } complete={false} name={`Delete`}/>
     </View>
   </View>
 )
@@ -45,4 +45,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Todo;
+export default connect(state => state) (Todo);
